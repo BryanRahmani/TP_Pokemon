@@ -6,7 +6,7 @@ import ngResource from 'angular-resource';
 export function pokemonsService($resource) {
     'ngInject';
     // AngularJS will instantiate a singleton by calling "new" on this function
-    return $resource('https://api.pokemontcg.io/v1/cards', { id: '@_id'
+    return $resource('/api/pokemonss', { id: '@_id'
         }, {
             update: {
                 method: 'GET'
