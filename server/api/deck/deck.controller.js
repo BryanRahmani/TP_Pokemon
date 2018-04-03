@@ -1,19 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/pokemonss              ->  index
- * POST    /api/pokemonss              ->  create
- * GET     /api/pokemonss/:id          ->  show
- * PUT     /api/pokemonss/:id          ->  upsert
- * PATCH   /api/pokemonss/:id          ->  patch
- * DELETE  /api/pokemonss/:id          ->  destroy
+ * GET     /api/decks              ->  index
+ * POST    /api/decks              ->  create
+ * GET     /api/decks/:id          ->  show
+ * PUT     /api/decks/:id          ->  upsert
+ * PATCH   /api/decks/:id          ->  patch
+ * DELETE  /api/decks/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Pokemons from './pokemons.model';
-const pokemon = require('pokemontcgsdk');
-
+import Deck from './deck.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -66,55 +64,54 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Pokemonss
+// Gets a list of Decks
 export function index(req, res) {
-  pokemon.card.where({ supertype: 'pokemon', page: 0, pageSize: 1000})
-  .then(cards => {
-      res.json(cards);
-  });
+  return Deck.find().exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
-// Gets a single Pokemons from the DB
+// Gets a single Deck from the DB
 export function show(req, res) {
-  pokemon.card.find(req.params.id)
-  .then(result => {
-      res.json(result);
-  })
+  return Deck.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
-// Creates a new Pokemons in the DB
+// Creates a new Deck in the DB
 export function create(req, res) {
-  return Pokemons.create(req.body)
+  return Deck.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given Pokemons in the DB at the specified ID
+// Upserts the given Deck in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Pokemons.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Deck.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Pokemons in the DB
+// Updates an existing Deck in the DB
 export function patch(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Pokemons.findById(req.params.id).exec()
+  return Deck.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Pokemons from the DB
+// Deletes a Deck from the DB
 export function destroy(req, res) {
-  return Pokemons.findById(req.params.id).exec()
+  return Deck.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

@@ -7,6 +7,10 @@ export class NavbarComponent {
   menu = [{
     title: 'Home',
     state: 'main'
+  },
+  {
+    title: 'Cards',
+    state: 'pokemon'
   }];
 
   isCollapsed = true;
@@ -18,6 +22,7 @@ export class NavbarComponent {
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
   }
+
 
 }
 

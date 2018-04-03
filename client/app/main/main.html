@@ -1,37 +1,11 @@
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>Liste des Pokémons</h1>
+    <h1>Page D'accueil</h1>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
   </div>
 </header>
 <div class="container">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Type</th>
-        <th>Numéro</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr  dir-paginate="pokemon in PokCtrl.pokemons_liste | itemsPerPage: 10">
-        <th> {{ pokemon.name }} </th>
-        <td><div ng-repeat="pokemontype in pokemon.types">{{ pokemontype }}</div></td>
-        <td> {{ pokemon.nationalPokedexNumber }}</td>
-        <td><img style="width: 128px;" src="{{ pokemon.imageUrl }}"/></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <dir-pagination-controls></dir-pagination-controls>
+La page qui sert à rien bitch !
 </div>
-<!--  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
-        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}</a></li>
-      </ul>
-    </div>
-  </div>
-</div>-->
+
+

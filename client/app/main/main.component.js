@@ -10,13 +10,12 @@ export class MainController {
   /*@ngInject*/
   constructor($scope, pokemons) {
     'ngInject';
-    this.pokemons = pokemons;
-    this.$scope = $scope;
   }
 
+
   $onInit() {
-    this.pokemons.query().$promise.then(data => this.pokemons_liste = data);
   }
+
 }
 
 export default angular.module('tpfullAngular2App.main', [uiRouter])
